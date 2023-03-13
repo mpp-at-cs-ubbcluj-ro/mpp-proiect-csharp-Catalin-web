@@ -53,6 +53,7 @@
     <Compile Include="Domain\ObiectiveTuristice.cs" />
     <Compile Include="Domain\Persoana.cs" />
     <Compile Include="Domain\Rezervare.cs" />
+    <Compile Include="Domain\User.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
