@@ -10,9 +10,9 @@ namespace Proiect.Domain
     public class User : Entity<string>
     {
         [Required]
-        public string Email { get; set; }
+        public string email { get; set; }
 
         [Required]
-        public string Password { get; set; }
+        public string parola { get; set; }
     }
 }
