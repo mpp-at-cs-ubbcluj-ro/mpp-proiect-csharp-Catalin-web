@@ -14,6 +14,19 @@ namespace Proiect
         [STAThread]
         static void Main()
         {
+            ExcursieDBRepo repo = new ExcursieDBRepo();
+            Excursie excursie = new Excursie()
+            {
+                idFirmaTransport = 1,
+                idObiectiv = 2,
+                ora = new TimeSpan(1234),
+                pret = 5,
+                nrLocuriTotale = 6,
+            };
+            repo.adauga(excursie);
+            var lst = repo.getAll();
+            Console.WriteLine(repo.getAll().FirstOrDefault().idFirmaTransport);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
