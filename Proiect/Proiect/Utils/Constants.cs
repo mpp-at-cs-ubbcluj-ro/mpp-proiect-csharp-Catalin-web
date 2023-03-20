@@ -8,6 +8,8 @@ namespace Proiect
 {
     public static class Constants
     {
-        public static readonly string ConnectionString = "Data Source=excursii.db;";
+        public static readonly string ConnectionString = "Data Source=E:\\Facultate\\Sem_4\\MPP\\Laboratoare\\Lab3\\mpp-proiect-csharp-Catalin-web\\Proiect\\Proiect\\Files\\exursii.db;version=3;new=False;datetimeformat=CurrentCulture;";
+
+        public static readonly string LogFilePath = "E:\\Facultate\\Sem_4\\MPP\\Laboratoare\\Lab3\\mpp-proiect-csharp-Catalin-web\\Proiect\\Proiect\\logs.txt";
     }
 }

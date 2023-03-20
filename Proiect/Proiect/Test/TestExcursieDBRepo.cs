@@ -1,4 +1,5 @@
 ﻿using System;
+using Xunit;
 
 namespace Proiect
 {
@@ -12,7 +13,7 @@ namespace Proiect
             {
                 idFirmaTransport = 1,
                 idObiectiv = 2,
-                ora = new TimeSpan(1234),
+                ora = "ora",
                 pret = 5,
                 nrLocuriTotale = 6,
             };

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,13 +9,17 @@ namespace Proiect
 {
     public class ObiectiveTuristiceDBRepo : Repository<int, ObiectiveTuristice>
     {
+        private readonly Logger _logger = new FileLogger();
         public void adauga(ObiectiveTuristice entity)
         {
-                var connection = ConnectionUtils.CreateConnection();
+            _logger.Log("adauga obiectiv turistic");
+            var connection = ConnectionUtils.CreateConnection();
                 var command = connection.CreateCommand();
-                command.CommandText = "insert into obiectiv_turistic(nume) values (?)";
-                command.Parameters.Add(entity.nume);
-                try
+                command.CommandText = "insert into obiectiv_turistic(nume) values (@nume)";
+                command.Parameters.Add("@nume", DbType.String);
+                command.Parameters["@nume"].Value = entity.nume;
+
+            try
                 {
                     command.ExecuteNonQuery();
                 }
@@ -40,6 +45,7 @@ namespace Proiect
 
         public List<ObiectiveTuristice> getAll()
         {
+            _logger.Log("get all obiectiv turistic");
             var list = new List<ObiectiveTuristice>();
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
@@ -61,10 +67,12 @@ namespace Proiect
 
         public void sterge(ObiectiveTuristice entity)
         {
+            _logger.Log("sterge obiectiv turistic");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
-            command.CommandText = "delete from obiectiv_turistic where id=?";
-            command.Parameters.Add(entity.id);
+            command.CommandText = "delete from obiectiv_turistic where id=@id";
+            command.Parameters.Add("@id", DbType.Int16);
+            command.Parameters["@id"].Value = entity.id;
 
             try
             {
@@ -78,11 +86,14 @@ namespace Proiect
 
         public void update(ObiectiveTuristice entitate, ObiectiveTuristice nouaEntitate)
         {
+            _logger.Log("update obiectiv turistic");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
-            command.CommandText = "update obiectiv_turistic set nume=? where id=?";
-            command.Parameters.Add(nouaEntitate.nume);
-            command.Parameters.Add(entitate.id);
+            command.CommandText = "update obiectiv_turistic set nume=@nume where id=@id";
+            command.Parameters.Add("@nume", DbType.String);
+            command.Parameters["@nume"].Value = nouaEntitate.nume;
+            command.Parameters.Add("@id", DbType.Int16);
+            command.Parameters["@id"].Value = entitate.id;
 
             try
             {

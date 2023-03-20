@@ -15,17 +15,29 @@ namespace Proiect
         static void Main()
         {
             ExcursieDBRepo repo = new ExcursieDBRepo();
+
             Excursie excursie = new Excursie()
             {
                 idFirmaTransport = 1,
-                idObiectiv = 2,
-                ora = new TimeSpan(1234),
-                pret = 5,
-                nrLocuriTotale = 6,
+                idObiectiv = 1,
+                nrLocuriTotale = 5,
+                ora = "newOra",
+                pret = 5.5f
             };
             repo.adauga(excursie);
-            var lst = repo.getAll();
-            Console.WriteLine(repo.getAll().FirstOrDefault().idFirmaTransport);
+            excursie = repo.getAll().ElementAt(0);
+            Excursie newExcursie = new Excursie()
+            {
+                idFirmaTransport = 2,
+                idObiectiv = 2,
+                nrLocuriTotale = 3,
+                ora = "newOra",
+                pret = 5.6f
+            };
+            repo.update(excursie, newExcursie);
+            newExcursie = repo.getAll().ElementAt(0);
+            newExcursie = repo.cautaId(newExcursie.id);
+            repo.sterge(newExcursie);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

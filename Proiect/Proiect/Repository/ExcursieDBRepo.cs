@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using System.Data.SQLite;
 using Proiect.Domain;
 using System;
 using System.Collections.Generic;
@@ -6,27 +6,30 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Build.Framework;
 
 namespace Proiect
 {
     public class ExcursieDBRepo : Repository<int, Excursie>
     {
+        private readonly Logger _logger = new FileLogger();
 
         public void adauga(Excursie entity)
         {
+            _logger.Log("Adauga excursie");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
             command.CommandText = "insert into excursie(@id_obiectiv, @id_firma_transport, @ora, @nr_locuri_totale, @pret) values (?,?,?,?,?)";
-            command.Parameters.Add("@id_obiectiv", SqliteType.Integer);
-            command.Parameters.Add("@id_firma_transport", SqliteType.Integer);
-            command.Parameters.Add("@ora", SqliteType.Text);
-            command.Parameters.Add("@nr_locuri_totale", SqliteType.Integer);
-            command.Parameters.Add("@pret", SqliteType.Real);
+            command.Parameters.Add("@id_obiectiv", DbType.Int16);
             command.Parameters["@id_obiectiv"].Value = entity.idObiectiv;
+            command.Parameters.Add("@id_firma_transport", DbType.Int16);
             command.Parameters["@id_firma_transport"].Value = entity.idFirmaTransport;
+            command.Parameters.Add("@ora", DbType.String);
             command.Parameters["@ora"].Value = entity.ora.ToString();
-            command.Parameters["@nr_locuri_totale"].Value = entity.nrLocuriTotale;
+            command.Parameters.Add("@pret", DbType.VarNumeric);
             command.Parameters["@pret"].Value = entity.pret;
+            command.Parameters.Add("@nr_locuri_totale", DbType.Int16);
+            command.Parameters["@nr_locuri_totale"].Value = entity.nrLocuriTotale;
             try
             {
                 command.ExecuteNonQuery();
@@ -39,6 +42,7 @@ namespace Proiect
 
         public Excursie cautaId(int id)
         {
+            _logger.Log("Cauta id excursie");
             var list = getAll();
             foreach (var excursie in list)
             {
@@ -53,6 +57,7 @@ namespace Proiect
 
         public List<Excursie> getAll()
         {
+            _logger.Log("Get all excursie");
             var list = new List<Excursie>();
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
@@ -64,7 +69,7 @@ namespace Proiect
                 var id = reader.GetInt16(0);
                 var idObiectiv = reader.GetInt16(1);
                 var idFirmaTransport = reader.GetInt16(2);
-                var ora = reader.GetTimeSpan(3);
+                var ora = reader.GetString(3);
                 var nrLocuriTotale = reader.GetInt16(4);
                 var pret = reader.GetFloat(5);
                 var excursie = new Excursie()
@@ -72,7 +77,7 @@ namespace Proiect
                     id = id,
                     idObiectiv = idObiectiv,
                     idFirmaTransport = idFirmaTransport,
-                    ora = ora,
+                    ora= ora,
                     nrLocuriTotale = nrLocuriTotale,
                     pret = pret
                 };
@@ -84,12 +89,13 @@ namespace Proiect
 
         public void sterge(Excursie entity)
         {
+            _logger.Log("Sterge excursie");
             var list = new List<Excursie>();
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
 
             command.CommandText = "delete from excursie where id=@id";
-            command.Parameters.Add("@id", SqliteType.Integer);
+            command.Parameters.Add("@id", DbType.Int16);
             command.Parameters["@id"].Value = entity.id;
             try
             {
@@ -102,23 +108,24 @@ namespace Proiect
 
         public void update(Excursie entitate, Excursie nouaEntitate)
         {
+            _logger.Log("Update excursie");
             var list = new List<Excursie>();
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
 
             command.CommandText = "update excursie set id_obiectiv=@id_obiectiv, id_firma_transport=@id_firma_transport, ora=@ora, nr_locuri_totale=@nr_locuri_totale, pret=@pret where id=@id";
             
-            command.Parameters.Add("@id_obiectiv", SqliteType.Integer);
-            command.Parameters.Add("@id_firma_transport", SqliteType.Integer);
-            command.Parameters.Add("@ora", SqliteType.Text);
-            command.Parameters.Add("@nr_locuri_totale", SqliteType.Integer);
-            command.Parameters.Add("@pret", SqliteType.Real);
+            command.Parameters.Add("@id_obiectiv", DbType.Int16);
             command.Parameters["@id_obiectiv"].Value = nouaEntitate.idObiectiv;
+            command.Parameters.Add("@id_firma_transport", DbType.Int16);
             command.Parameters["@id_firma_transport"].Value = nouaEntitate.idFirmaTransport;
+            command.Parameters.Add("@ora", DbType.String);
             command.Parameters["@ora"].Value = nouaEntitate.ora.ToString();
+            command.Parameters.Add("@nr_locuri_totale", DbType.Int16);
             command.Parameters["@nr_locuri_totale"].Value = nouaEntitate.nrLocuriTotale;
+            command.Parameters.Add("@pret", DbType.Double);
             command.Parameters["@pret"].Value = nouaEntitate.pret;
-            command.Parameters.Add("@id", SqliteType.Integer);
+            command.Parameters.Add("@id", DbType.Int16);
             command.Parameters["@id"].Value = entitate.id;
 
             try

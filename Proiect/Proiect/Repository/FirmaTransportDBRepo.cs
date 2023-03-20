@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Proiect.Domain;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,12 +10,16 @@ namespace Proiect
 {
     public class FirmaTransportDBRepo : Repository<int, FirmaTransport>
     {
+        private readonly Logger _logger = new FileLogger();
         public void adauga(FirmaTransport entity)
         {
+            _logger.Log("Adauga firma transport");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
-            command.CommandText = "insert into firma_transport(nume) values (?)";
-            command.Parameters.Add(entity.nume);
+            command.CommandText = "insert into firma_transport(nume) values (@nume)";
+            command.Parameters.Add("@nume", DbType.String);
+            command.Parameters["@nume"].Value = entity.nume;
+            
             try
             {
                 command.ExecuteNonQuery();
@@ -40,6 +46,7 @@ namespace Proiect
 
         public List<FirmaTransport> getAll()
         {
+            _logger.Log("get all firma transport");
             var list = new List<FirmaTransport>();
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
@@ -60,10 +67,13 @@ namespace Proiect
 
         public void sterge(FirmaTransport entity)
         {
+            _logger.Log("sterge" +
+                " firma transport");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
-            command.CommandText = "delete from firma_transport where id=?";
-            command.Parameters.Add(entity.id);
+            command.CommandText = "delete from firma_transport where id=@id";
+            command.Parameters.Add("@id", DbType.Int16);
+            command.Parameters["@id"].Value = entity.id;
 
             try
             {
@@ -77,12 +87,14 @@ namespace Proiect
 
         public void update(FirmaTransport entitate, FirmaTransport nouaEntitate)
         {
+            _logger.Log("updatefirma transport");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
-            command.CommandText = "update firma_transport set nume=? where id=?";
-            command.Parameters.Add(nouaEntitate.nume);
-            command.Parameters.Add(entitate.id);
-
+            command.CommandText = "update firma_transport set nume=@nume where id=@id";
+            command.Parameters.Add("@nume", DbType.String);
+            command.Parameters["@nume"].Value = nouaEntitate.nume;
+            command.Parameters.Add("@id", DbType.Int16);
+            command.Parameters["@id"].Value = entitate.id;
             try
             {
                 command.ExecuteNonQuery();

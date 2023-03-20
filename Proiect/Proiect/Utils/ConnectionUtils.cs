@@ -1,16 +1,16 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using System.Data.SQLite;
 using System;
 
 namespace Proiect
 {
     public static class ConnectionUtils
     {
-        public static SqliteConnection CreateConnection()
+        public static SQLiteConnection CreateConnection()
         {
 
-            SqliteConnection sqlite_conn;
+            SQLiteConnection sqlite_conn;
             // Create a new database connection:
-            sqlite_conn = new SqliteConnection(Constants.ConnectionString);
+            sqlite_conn = new SQLiteConnection(Constants.ConnectionString);
          // Open the connection:
          try
             {
