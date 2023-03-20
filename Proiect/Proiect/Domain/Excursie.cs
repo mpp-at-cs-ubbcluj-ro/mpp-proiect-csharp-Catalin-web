@@ -1,22 +1,23 @@
 ﻿using Microsoft.Build.Framework;
+using Proiect.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proiect.Domain
+namespace Proiect
 {
-    public class Excursie : Entity<string>
+    public class Excursie : Entity<int>
     {
         [Required]
-        public string idObiectiv { get; set; }
+        public int idObiectiv { get; set; }
         
         [Required]
-        public string idObiectiv2 { get; set; }
+        public int idFirmaTransport { get; set; }
 
         [Required]
-        public TimeSpan ora { get; set; }
+        public string ora { get; set; }
 
         [Required]
         public float pret { get; set; }
