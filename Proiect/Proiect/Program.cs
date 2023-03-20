@@ -18,13 +18,14 @@ namespace Proiect
 
             Excursie excursie = new Excursie()
             {
-                idFirmaTransport = 1,
-                idObiectiv = 1,
-                nrLocuriTotale = 5,
-                ora = "newOra",
-                pret = 5.5f
+                idFirmaTransport = 4,
+                idObiectiv = 2,
+                nrLocuriTotale = 1314,
+                ora = "2:10",
+                pret = 5.9f
             };
             repo.adauga(excursie);
+            var all = repo.getAll();
             excursie = repo.getAll().ElementAt(0);
             Excursie newExcursie = new Excursie()
             {

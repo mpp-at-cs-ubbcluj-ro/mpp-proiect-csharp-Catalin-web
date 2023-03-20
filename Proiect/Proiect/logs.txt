@@ -1,5 +1,14 @@
-Sterge excursie
+
 Adauga excursie
+Get all excursie
+Get all excursie
+Adauga excursie
+Adauga excursie
+Get all excursie
+Get all excursie
+Adauga excursie
+Adauga excursie
+Get all excursie
 Get all excursie
 Update excursie
 Get all excursie
@@ -8,12 +17,6 @@ Get all excursie
 Sterge excursie
 Adauga excursie
 Get all excursie
-Update excursie
-Get all excursie
-Cauta id excursie
-Get all excursie
-Sterge excursie
-Adauga excursie
 Get all excursie
 Update excursie
 Get all excursie

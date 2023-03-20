@@ -19,17 +19,12 @@ namespace Proiect
             _logger.Log("Adauga excursie");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
-            command.CommandText = "insert into excursie(@id_obiectiv, @id_firma_transport, @ora, @nr_locuri_totale, @pret) values (?,?,?,?,?)";
-            command.Parameters.Add("@id_obiectiv", DbType.Int16);
-            command.Parameters["@id_obiectiv"].Value = entity.idObiectiv;
-            command.Parameters.Add("@id_firma_transport", DbType.Int16);
-            command.Parameters["@id_firma_transport"].Value = entity.idFirmaTransport;
-            command.Parameters.Add("@ora", DbType.String);
-            command.Parameters["@ora"].Value = entity.ora.ToString();
-            command.Parameters.Add("@pret", DbType.VarNumeric);
-            command.Parameters["@pret"].Value = entity.pret;
-            command.Parameters.Add("@nr_locuri_totale", DbType.Int16);
-            command.Parameters["@nr_locuri_totale"].Value = entity.nrLocuriTotale;
+            command.CommandText = "insert into excursie(id_obiectiv, id_firma_transport, ora, nr_locuri_totale, pret) values (@id_obiectiv,@id_firma_transport,@ora,@nr_locuri_totale,@pret)";
+            command.Parameters.AddWithValue("@id_obiectiv", entity.idObiectiv);
+            command.Parameters.AddWithValue("@id_firma_transport", entity.idFirmaTransport);
+            command.Parameters.AddWithValue("@ora", entity.ora);
+            command.Parameters.AddWithValue("@pret", entity.pret);
+            command.Parameters.AddWithValue("@nr_locuri_totale", entity.nrLocuriTotale);
             try
             {
                 command.ExecuteNonQuery();
