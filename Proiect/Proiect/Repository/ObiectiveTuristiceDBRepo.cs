@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace Proiect
 {
     public class ObiectiveTuristiceDBRepo : Repository<int, ObiectiveTuristice>
     {
-        private readonly Logger _logger = new FileLogger();
+        private readonly ILog _logger = LogManager.GetLogger("Monitor");
         public void adauga(ObiectiveTuristice entity)
         {
-            _logger.Log("adauga obiectiv turistic");
+            _logger.Info("adauga obiectiv turistic");
             var connection = ConnectionUtils.CreateConnection();
                 var command = connection.CreateCommand();
                 command.CommandText = "insert into obiectiv_turistic(nume) values (@nume)";
@@ -45,7 +46,7 @@ namespace Proiect
 
         public List<ObiectiveTuristice> getAll()
         {
-            _logger.Log("get all obiectiv turistic");
+            _logger.Info("get all obiectiv turistic");
             var list = new List<ObiectiveTuristice>();
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
@@ -67,7 +68,7 @@ namespace Proiect
 
         public void sterge(ObiectiveTuristice entity)
         {
-            _logger.Log("sterge obiectiv turistic");
+            _logger.Info("sterge obiectiv turistic");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
             command.CommandText = "delete from obiectiv_turistic where id=@id";
@@ -86,7 +87,7 @@ namespace Proiect
 
         public void update(ObiectiveTuristice entitate, ObiectiveTuristice nouaEntitate)
         {
-            _logger.Log("update obiectiv turistic");
+            _logger.Info("update obiectiv turistic");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
             command.CommandText = "update obiectiv_turistic set nume=@nume where id=@id";

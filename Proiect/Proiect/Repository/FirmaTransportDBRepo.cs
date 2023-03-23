@@ -1,4 +1,5 @@
-﻿using Proiect.Domain;
+﻿using log4net;
+using Proiect.Domain;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,10 +11,10 @@ namespace Proiect
 {
     public class FirmaTransportDBRepo : Repository<int, FirmaTransport>
     {
-        private readonly Logger _logger = new FileLogger();
+        private readonly ILog _logger = LogManager.GetLogger("Monitor");
         public void adauga(FirmaTransport entity)
         {
-            _logger.Log("Adauga firma transport");
+            _logger.Info("Adauga firma transport");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
             command.CommandText = "insert into firma_transport(nume) values (@nume)";
@@ -46,7 +47,7 @@ namespace Proiect
 
         public List<FirmaTransport> getAll()
         {
-            _logger.Log("get all firma transport");
+            _logger.Info("get all firma transport");
             var list = new List<FirmaTransport>();
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
@@ -67,7 +68,7 @@ namespace Proiect
 
         public void sterge(FirmaTransport entity)
         {
-            _logger.Log("sterge" +
+            _logger.Info("sterge" +
                 " firma transport");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
@@ -87,7 +88,7 @@ namespace Proiect
 
         public void update(FirmaTransport entitate, FirmaTransport nouaEntitate)
         {
-            _logger.Log("updatefirma transport");
+            _logger.Info("updatefirma transport");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
             command.CommandText = "update firma_transport set nume=@nume where id=@id";

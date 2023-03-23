@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace Proiect
 {
     public class UserDBRepo : Repository<int, User>
     {
-        private readonly Logger _logger = new FileLogger();
+        private readonly ILog _logger = LogManager.GetLogger("Monitor");
         public void adauga(User entity)
         {
-            _logger.Log("adauga user");
+            _logger.Info("adauga user");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
             command.CommandText = "insert into user(email, parola) values (@email,@parola)";
@@ -32,7 +33,7 @@ namespace Proiect
 
         public User cautaId(int id)
         {
-            _logger.Log("cauta user");
+            _logger.Info("cauta user");
             var list = getAll();
             foreach (var el in list)
             {
@@ -47,7 +48,7 @@ namespace Proiect
 
         public List<User> getAll()
         {
-            _logger.Log("cauta user");
+            _logger.Info("cauta user");
             var list = new List<User>();
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
@@ -71,7 +72,7 @@ namespace Proiect
 
         public void sterge(User entity)
         {
-            _logger.Log("cauta user");
+            _logger.Info("cauta user");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
             command.CommandText = "delete from user where id=@id";
@@ -90,7 +91,7 @@ namespace Proiect
 
         public void update(User entitate, User nouaEntitate)
         {
-            _logger.Log("cauta user");
+            _logger.Info("cauta user");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
             command.CommandText = "update user set email=@email, parola=@parola where id=@id";

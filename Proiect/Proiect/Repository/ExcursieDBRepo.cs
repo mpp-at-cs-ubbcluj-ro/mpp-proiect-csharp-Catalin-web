@@ -1,35 +1,25 @@
-﻿using System.Data.SQLite;
-using Proiect.Domain;
+﻿using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Build.Framework;
 
 namespace Proiect
 {
     public class ExcursieDBRepo : Repository<int, Excursie>
     {
-        private readonly Logger _logger = new FileLogger();
+        private readonly ILog _logger = LogManager.GetLogger("Monitor");
 
         public void adauga(Excursie entity)
         {
-            _logger.Log("Adauga excursie");
+            _logger.Info("Adauga excursie");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
-            command.CommandText = "insert into excursie(@id_obiectiv, @id_firma_transport, @ora, @nr_locuri_totale, @pret) values (?,?,?,?,?)";
-            command.Parameters.Add("@id_obiectiv", DbType.Int16);
-            command.Parameters["@id_obiectiv"].Value = entity.idObiectiv;
-            command.Parameters.Add("@id_firma_transport", DbType.Int16);
-            command.Parameters["@id_firma_transport"].Value = entity.idFirmaTransport;
-            command.Parameters.Add("@ora", DbType.String);
-            command.Parameters["@ora"].Value = entity.ora.ToString();
-            command.Parameters.Add("@pret", DbType.VarNumeric);
-            command.Parameters["@pret"].Value = entity.pret;
-            command.Parameters.Add("@nr_locuri_totale", DbType.Int16);
-            command.Parameters["@nr_locuri_totale"].Value = entity.nrLocuriTotale;
+            command.CommandText = "insert into excursie(id_obiectiv, id_firma_transport, ora, nr_locuri_totale, pret) values (@id_obiectiv,@id_firma_transport,@ora,@nr_locuri_totale,@pret)";
+            command.Parameters.AddWithValue("@id_obiectiv", entity.idObiectiv);
+            command.Parameters.AddWithValue("@id_firma_transport", entity.idFirmaTransport);
+            command.Parameters.AddWithValue("@ora", entity.ora);
+            command.Parameters.AddWithValue("@pret", entity.pret);
+            command.Parameters.AddWithValue("@nr_locuri_totale", entity.nrLocuriTotale);
             try
             {
                 command.ExecuteNonQuery();
@@ -42,7 +32,7 @@ namespace Proiect
 
         public Excursie cautaId(int id)
         {
-            _logger.Log("Cauta id excursie");
+            _logger.Info("Cauta id excursie");
             var list = getAll();
             foreach (var excursie in list)
             {
@@ -57,7 +47,7 @@ namespace Proiect
 
         public List<Excursie> getAll()
         {
-            _logger.Log("Get all excursie");
+            _logger.Info("Get all excursie");
             var list = new List<Excursie>();
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
@@ -89,7 +79,7 @@ namespace Proiect
 
         public void sterge(Excursie entity)
         {
-            _logger.Log("Sterge excursie");
+            _logger.Info("Sterge excursie");
             var list = new List<Excursie>();
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
@@ -108,7 +98,7 @@ namespace Proiect
 
         public void update(Excursie entitate, Excursie nouaEntitate)
         {
-            _logger.Log("Update excursie");
+            _logger.Info("Update excursie");
             var list = new List<Excursie>();
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();

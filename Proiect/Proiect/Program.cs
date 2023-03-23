@@ -8,23 +8,30 @@ namespace Proiect
 {
     internal static class Program
     {
+        private static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
+            log4net.Config.XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo(AppDomain.CurrentDomain.BaseDirectory + "App.config"));
+
+            _logger.Info("Hello logging world!");
+            Console.WriteLine("Hit enter");
+
             ExcursieDBRepo repo = new ExcursieDBRepo();
 
             Excursie excursie = new Excursie()
             {
-                idFirmaTransport = 1,
-                idObiectiv = 1,
-                nrLocuriTotale = 5,
-                ora = "newOra",
-                pret = 5.5f
+                idFirmaTransport = 4,
+                idObiectiv = 2,
+                nrLocuriTotale = 1314,
+                ora = "dasdsa",
+                pret = 5.9f
             };
             repo.adauga(excursie);
+            var all = repo.getAll();
             excursie = repo.getAll().ElementAt(0);
             Excursie newExcursie = new Excursie()
             {

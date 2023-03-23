@@ -1,5 +1,6 @@
 ﻿using System.Data.SQLite;
 using System;
+using System.Configuration;
 
 namespace Proiect
 {
@@ -10,7 +11,7 @@ namespace Proiect
 
             SQLiteConnection sqlite_conn;
             // Create a new database connection:
-            sqlite_conn = new SQLiteConnection(Constants.ConnectionString);
+            sqlite_conn = new SQLiteConnection(ConfigurationManager.AppSettings["connectionString"]);
          // Open the connection:
          try
             {

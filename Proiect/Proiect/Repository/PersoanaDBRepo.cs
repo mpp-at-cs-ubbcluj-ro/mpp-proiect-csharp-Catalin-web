@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace Proiect
 {
     public class PersoanaDBRepo : Repository<int, Persoana>
     {
-        private readonly Logger _logger = new FileLogger();
+        private readonly ILog _logger = LogManager.GetLogger("Monitor");
         public void adauga(Persoana entity)
         {
-            _logger.Log("adauga persoana");
+            _logger.Info("adauga persoana");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
             command.CommandText = "insert into persoana(nume, numar_telefon) values (@nume,@numar_telefon)";
@@ -33,7 +34,7 @@ namespace Proiect
 
         public Persoana cautaId(int id)
         {
-            _logger.Log("cauta persoana");
+            _logger.Info("cauta persoana");
             var list = getAll();
             foreach (var el in list)
             {
@@ -48,7 +49,7 @@ namespace Proiect
 
         public List<Persoana> getAll()
         {
-            _logger.Log("get all persoana");
+            _logger.Info("get all persoana");
             var list = new List<Persoana>();
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
@@ -72,7 +73,7 @@ namespace Proiect
 
         public void sterge(Persoana entity)
         {
-            _logger.Log("sterge persoana");
+            _logger.Info("sterge persoana");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
             command.CommandText = "delete from persoana where id=@id";
@@ -91,7 +92,7 @@ namespace Proiect
 
         public void update(Persoana entitate, Persoana nouaEntitate)
         {
-            _logger.Log("update persoana");
+            _logger.Info("update persoana");
             var connection = ConnectionUtils.CreateConnection();
             var command = connection.CreateCommand();
             command.CommandText = "update persoana set nume=@nume, numar_telefon=@numar_telefon where id=@id";
