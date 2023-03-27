@@ -1,0 +1,9 @@
+2023-03-27 18:42:08,094 [1] INFO Proiect.Program - Hello logging world!
+2023-03-27 18:42:08,112 [1] INFO Monitor - Adauga excursie
+2023-03-27 18:42:08,174 [1] INFO Monitor - Get all excursie
+2023-03-27 18:42:08,182 [1] INFO Monitor - Get all excursie
+2023-03-27 18:42:08,184 [1] INFO Monitor - Update excursie
+2023-03-27 18:42:08,188 [1] INFO Monitor - Get all excursie
+2023-03-27 18:42:08,194 [1] INFO Monitor - Cauta id excursie
+2023-03-27 18:42:08,194 [1] INFO Monitor - Get all excursie
+2023-03-27 18:42:08,195 [1] INFO Monitor - Sterge excursie
