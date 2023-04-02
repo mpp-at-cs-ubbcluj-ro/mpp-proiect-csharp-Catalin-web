@@ -18,7 +18,7 @@ namespace Proiect
             var command = connection.CreateCommand();
             command.CommandText = "insert into rezervare(id_excursie, id_persoana, nr_bilete) values (@id_excursie,@id_persoana,@nr_bilete)";
             command.Parameters.Add("@id_excursie", DbType.Int16);
-            command.Parameters["@nume"].Value = entity.idExcursie;
+            command.Parameters["@id_excursie"].Value = entity.idExcursie;
             command.Parameters.Add("@id_persoana", DbType.Int16);
             command.Parameters["@id_persoana"].Value = entity.idPersoana;
             command.Parameters.Add("@nr_bilete", DbType.Int16);

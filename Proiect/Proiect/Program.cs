@@ -17,38 +17,23 @@ namespace Proiect
         {
             log4net.Config.XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo(AppDomain.CurrentDomain.BaseDirectory + "App.config"));
 
-            _logger.Info("Hello logging world!");
-            Console.WriteLine("Hit enter");
+            Repository<int, Excursie> excursii = new ExcursieDBRepo();
+            Repository<int, FirmaTransport> firmeTransport = new FirmaTransportDBRepo();
+            Repository<int, ObiectiveTuristice> obiectiveTuristice = new ObiectiveTuristiceDBRepo();
+            Repository<int, Persoana> persoane = new PersoanaDBRepo();
+            Repository<int, Rezervare> rezervari = new RezervareDBRepo();
+            Repository<int, User> useri = new UserDBRepo();
+            Service srv = new Service(excursii, firmeTransport, obiectiveTuristice, persoane, rezervari, useri);
 
-            ExcursieDBRepo repo = new ExcursieDBRepo();
-
-            Excursie excursie = new Excursie()
-            {
-                idFirmaTransport = 4,
-                idObiectiv = 2,
-                nrLocuriTotale = 1314,
-                ora = "dasdsa",
-                pret = 5.9f
-            };
-            repo.adauga(excursie);
-            var all = repo.getAll();
-            excursie = repo.getAll().ElementAt(0);
-            Excursie newExcursie = new Excursie()
-            {
-                idFirmaTransport = 2,
-                idObiectiv = 2,
-                nrLocuriTotale = 3,
-                ora = "newOra",
-                pret = 5.6f
-            };
-            repo.update(excursie, newExcursie);
-            newExcursie = repo.getAll().ElementAt(0);
-            newExcursie = repo.cautaId(newExcursie.id);
-            repo.sterge(newExcursie);
+            
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            var Main = new Main(srv);
+            Main.Show();
+            Application.Run();
+
+            Application.Exit();
         }
     }
 }
