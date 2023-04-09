@@ -127,13 +127,14 @@ namespace WebApi.Services
             return lst;
         }
 
-        public int getNrLocuriDisponibile(Excursie excursie)
+        public int getNrLocuriDisponibile(int idExcursie)
         {
+            var excursie = _excursii.cautaId(idExcursie);
             var totalLocuri = excursie.nrLocuriTotale;
             var rezervari = _rezervari.getAll();
             foreach (var rezervare in rezervari)
             {
-                if (rezervare.idExcursie == excursie.id)
+                if (rezervare.idExcursie == idExcursie)
                 {
                     totalLocuri -= rezervare.nrBilete;
                 }
@@ -154,16 +155,16 @@ namespace WebApi.Services
             return null;
         }
 
-        public void rezervaLocuri(string numeClient, string numarTelefon, int numarBileteDorite, Excursie excursie)
+        public void rezervaLocuri(string numeClient, string numarTelefon, int numarBileteDorite, int idExcursie)
         {
             var persoana = getPersoanaByNumeAndTelefon(numeClient, numarTelefon);
             Rezervare rezervare = new Rezervare()
             {
-                idExcursie = excursie.id,
+                idExcursie = idExcursie,
                 idPersoana = persoana.id,
                 nrBilete = numarBileteDorite
             };
-            var locuriDisponibile = getNrLocuriDisponibile(excursie);
+            var locuriDisponibile = getNrLocuriDisponibile(idExcursie);
             if (locuriDisponibile >= numarBileteDorite)
             {
                 _rezervari.adauga(rezervare);

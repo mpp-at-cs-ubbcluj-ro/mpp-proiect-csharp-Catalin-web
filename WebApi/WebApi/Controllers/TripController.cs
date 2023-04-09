@@ -7,7 +7,7 @@ using WebApi.Services;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("trip")]
+    [Route("v1")]
     [Produces(MediaTypeNames.Application.Json)]
     public class TripController
     {
@@ -112,9 +112,9 @@ namespace WebApi.Controllers
         /// <response code="200">OK.</response>
         [HttpGet]
         [Route("query/trip/left")]
-        public int queryLeftSpaces(Excursie excursie)
+        public int queryLeftSpaces(int idExcursie)
         {
-            return _tripFacade.getNrLocuriDisponibile(excursie);
+            return _tripFacade.getNrLocuriDisponibile(idExcursie);
         }
 
         /// <summary>
@@ -155,10 +155,10 @@ namespace WebApi.Controllers
         /// </summary>
         /// <response code="200">OK.</response>
         [HttpPost]
-        [Route("query/rezervare")]
-        public void rezervaLocuri(string numeClient, string numarTelefon, int numarBileteDorite, Excursie excursie)
+        [Route("add/rezervare")]
+        public void rezervaLocuri(string numeClient, string numarTelefon, int numarBileteDorite, int idExcursie)
         {
-            _tripFacade.rezervaLocuri(numeClient, numarTelefon, numarBileteDorite, excursie);
+            _tripFacade.rezervaLocuri(numeClient, numarTelefon, numarBileteDorite, idExcursie);
         }
     }
 }
