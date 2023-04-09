@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33414.496
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{EEE14E01-AACD-4591-B3F2-70C3853C1649}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{9308E176-FACD-44CC-987E-F4CE199029C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStore", "DataStore\DataStore.csproj", "{63650CB2-0E4F-4529-A4C1-A9035368306F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EEE14E01-AACD-4591-B3F2-70C3853C1649}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEE14E01-AACD-4591-B3F2-70C3853C1649}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEE14E01-AACD-4591-B3F2-70C3853C1649}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEE14E01-AACD-4591-B3F2-70C3853C1649}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9308E176-FACD-44CC-987E-F4CE199029C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9308E176-FACD-44CC-987E-F4CE199029C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9308E176-FACD-44CC-987E-F4CE199029C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9308E176-FACD-44CC-987E-F4CE199029C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63650CB2-0E4F-4529-A4C1-A9035368306F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63650CB2-0E4F-4529-A4C1-A9035368306F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63650CB2-0E4F-4529-A4C1-A9035368306F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63650CB2-0E4F-4529-A4C1-A9035368306F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A173925B-46FB-499A-B4CD-9516A87B5AEE}
+	EndGlobalSection
+EndGlobal

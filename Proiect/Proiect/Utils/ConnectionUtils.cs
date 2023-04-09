@@ -6,6 +6,8 @@ namespace Proiect
 {
     public static class ConnectionUtils
     {
+
+
         public static SQLiteConnection CreateConnection()
         {
 
