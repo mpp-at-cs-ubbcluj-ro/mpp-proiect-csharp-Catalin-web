@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Model.Entities;
+using System.Collections.Concurrent;
 using System.Net.Mime;
+using System.Net.WebSockets;
+using System.Runtime.InteropServices;
+using System.Text;
 using WebApi.Services;
 
 namespace WebApi.Controllers
@@ -9,9 +13,12 @@ namespace WebApi.Controllers
     [ApiController]
     [Route("v1")]
     [Produces(MediaTypeNames.Application.Json)]
-    public class TripController
+    public class TripController : ControllerBase
     {
         private readonly ITripFacade _tripFacade;
+        private static ConcurrentBag<WebSocket> webSockets = new();
+        private static WebSocketReceiveResult result;
+
         public TripController(ITripFacade tripFacade)
         {
             _tripFacade = tripFacade;
@@ -159,6 +166,51 @@ namespace WebApi.Controllers
         public void rezervaLocuri(string numeClient, string numarTelefon, int numarBileteDorite, int idExcursie)
         {
             _tripFacade.rezervaLocuri(numeClient, numarTelefon, numarBileteDorite, idExcursie);
+            sendDataToAll();
+        }
+
+        /// <summary>
+        /// Reservate places.
+        /// </summary>
+        /// <response code="200">OK.</response>
+        [HttpGet]
+        [Route("webSocket")]
+        public async Task get()
+        {
+            if (HttpContext.WebSockets.IsWebSocketRequest)
+            {
+                var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync().ConfigureAwait(false);
+
+                var buffer = new byte[1024 * 4];
+                result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+
+                webSockets.Add(webSocket);
+
+                sendDataToAll();
+
+            }
+            else
+            {
+                HttpContext.Response.StatusCode = 400;
+            }
+            await Task.Delay(-1);
+        }
+
+        private async void sendDataToAll()
+        {
+            foreach (var webSocket in webSockets)
+            {
+                try
+                {
+
+                var mesaj = new ArraySegment<byte>(Encoding.UTF8.GetBytes("Hello from server"));
+                await webSocket.SendAsync(mesaj, WebSocketMessageType.Text, false, CancellationToken.None);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
         }
     }
 }

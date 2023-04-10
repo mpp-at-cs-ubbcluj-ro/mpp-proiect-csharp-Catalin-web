@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Core.Mapping;
 using System.Linq;
 using System.Net.Http;
+using System.Net.WebSockets;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
@@ -180,7 +181,7 @@ namespace Proiect.Client
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
             var jsonBody = Serialize(dict);
-            var response = await CallAsync(HttpMethod.Post, "/v1/add/rezervare?numeClient=" + numeClient + "&numarBileteDorite=" + numarBileteDorite.ToString() + "&idExcursie="+ idExcursie.ToString(), jsonBody);
+            var response = await CallAsync(HttpMethod.Post, "/v1/add/rezervare?numeClient=" + numeClient + "&numarTelefon=" + numarTelefon + "&numarBileteDorite=" + numarBileteDorite.ToString() + "&idExcursie="+ idExcursie.ToString(), jsonBody);
         }
 
         private static string Serialize(object obj)
@@ -218,6 +219,22 @@ namespace Proiect.Client
                 return null;
             }
             return JsonSerializer.Deserialize<T>(json);
+        }
+
+        public async Task handleWebSocket(Action callback)
+        {
+            var socket = new ClientWebSocket();
+            await socket.ConnectAsync(new Uri("ws://localhost:12500/v1/webSocket"), CancellationToken.None);
+            var mesaj = new ArraySegment<byte>(Encoding.UTF8.GetBytes("Hello from client"));
+            socket.SendAsync(mesaj, WebSocketMessageType.Text, true, CancellationToken.None).Wait();
+
+            while (true)
+            {
+                var buffer = new byte[1024 * 4];
+                var result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None).ConfigureAwait(true);
+                var serverMsg = Encoding.UTF8.GetString(buffer, 0, result.Count);
+                callback();
+            }
         }
     }
 }

@@ -15,10 +15,11 @@ namespace Proiect
         public Main(ITripClient client)
         {
             this.client = client;
+            Control.CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
             initializeTable1();
             initializeTable2();
-            loadTable1Async();
+            client.handleWebSocket(handleSocket);
         }
 
         private void initializeTable1()
@@ -108,8 +109,6 @@ namespace Proiect
             int selectedRowCount = dataGridView2.Rows.GetRowCount(DataGridViewElementStates.Selected) - 1;
             excursieSelectata = lista2[selectedRowCount];
             client.rezervaLocuri(numeCLient,numarTelefon,bileteDorite, excursieSelectata.id);
-            loadTable1Async();
-            reloadTable2();
         }
 
         private async void reloadTable2()
@@ -136,6 +135,12 @@ namespace Proiect
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             
+        }
+
+        private async void handleSocket()
+        {
+            await loadTable1Async();
+            reloadTable2();
         }
     }
 }

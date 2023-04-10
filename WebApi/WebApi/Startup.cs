@@ -68,6 +68,9 @@ namespace WebApi
             }
 
             var serviceSettings = app.ApplicationServices.GetService<ISettingsProvider>();
+
+            // Web sockets middleware
+            app.UseWebSockets();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

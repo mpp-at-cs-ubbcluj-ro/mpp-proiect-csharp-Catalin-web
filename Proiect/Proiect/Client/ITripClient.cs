@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -19,5 +20,6 @@ namespace Proiect.Client
         void logout();
         void rezervaLocuri(string numeClient, string numarTelefon, int numarBileteDorite, int idExcursie);
         Task<HttpResponseMessage> SendAsync(HttpRequestMessage request);
+        Task handleWebSocket(Action callback);
     }
 }
