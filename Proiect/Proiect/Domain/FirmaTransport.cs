@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Proiect
 {
-    public class FirmaTransport : Entity<int>
+    public class Int32 : Entity<int>
     {
         [Required]
         public string nume { get; set; }

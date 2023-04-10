@@ -1,22 +1,24 @@
-﻿using System;
+﻿using Proiect.Client;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Proiect
 {
     public partial class Main : Form
     {
-        private Service srv;
         private List<Excursie> lista2 = new List<Excursie>();
         private Excursie excursieSelectata;
-        public Main(Service srv)
+        private ITripClient client;
+        public Main(ITripClient client)
         {
-            this.srv = srv;
+            this.client = client;
             InitializeComponent();
             initializeTable1();
             initializeTable2();
-            loadTable1();
+            loadTable1Async();
         }
 
         private void initializeTable1()
@@ -38,17 +40,18 @@ namespace Proiect
             dataGridView2.Columns[3].Name = "Numar locuri disponibile";
         }
 
-        private void loadTable1()
+        private async Task loadTable1Async()
         {
             dataGridView1.Rows.Clear();
-            var excursii = srv.getAllExcursii();
+            var excursii = await client.getAllExcursii();
+            var excurs = await client.getAllExcursii();
             for(var i = 0;i<excursii.Count;i++) 
             {
-                string numeObiectiv = srv.getObiectivById(excursii[i].idObiectiv).nume;
-                string numeFirmaTransport = srv.getFirmaTransportById(excursii[i].idFirmaTransport).nume;
+                string numeObiectiv = (await client.getObiectivById(excursii[i].idObiectiv)).nume;
+                string numeFirmaTransport = (await client.getFirmaTransportById(excursii[i].idFirmaTransport)).nume;
                 string oraPlecarii = excursii[i].ora;
                 string pret = excursii[i].pret.ToString();
-                string numarLocuriDisponibile = srv.getNrLocuriDisponibile(excursii[i]).ToString();
+                string numarLocuriDisponibile = (await client.getNrLocuriDisponibile(excursii[i].id)).ToString();
                 string[] row = { numeObiectiv, numeFirmaTransport, oraPlecarii, pret, numarLocuriDisponibile };
                 dataGridView1.Rows.Add(row);
                 if(numarLocuriDisponibile == "0")
@@ -59,17 +62,17 @@ namespace Proiect
             }
         }
 
-        private void loadTable2(string nume, int oraMinima, int oraMaxima)
+        private async void loadTable2(string nume, int oraMinima, int oraMaxima)
         {
             dataGridView2.Rows.Clear();
-            var excursii = srv.getAllExcursiiByNumeAndInterval(nume,oraMinima,oraMaxima);
+            var excursii = await client.getAllExcursiiByNumeAndInterval(nume, oraMinima, oraMaxima);
             lista2 = excursii;
             for (var i = 0; i < excursii.Count; i++)
             {
-                string numeFirmaTransport = srv.getFirmaTransportById(excursii[i].idFirmaTransport).nume;
+                string numeFirmaTransport = (await client.getFirmaTransportById(excursii[i].idFirmaTransport)).nume;
                 string oraPlecarii = excursii[i].ora;
                 string pret = excursii[i].pret.ToString();
-                string numarLocuriDisponibile = srv.getNrLocuriDisponibile(excursii[i]).ToString();
+                string numarLocuriDisponibile = (await client.getNrLocuriDisponibile(excursii[i].id)).ToString();
                 string[] row = { numeFirmaTransport, oraPlecarii, pret, numarLocuriDisponibile };
                 dataGridView2.Rows.Add(row);
                 if (numarLocuriDisponibile == "0")
@@ -104,22 +107,22 @@ namespace Proiect
             int bileteDorite = int.Parse(textBox6.Text);
             int selectedRowCount = dataGridView2.Rows.GetRowCount(DataGridViewElementStates.Selected) - 1;
             excursieSelectata = lista2[selectedRowCount];
-            srv.rezervaLocuri(numeCLient,numarTelefon,bileteDorite, excursieSelectata);
-            loadTable1();
+            client.rezervaLocuri(numeCLient,numarTelefon,bileteDorite, excursieSelectata.id);
+            loadTable1Async();
             reloadTable2();
         }
 
-        private void reloadTable2()
+        private async void reloadTable2()
         {
             dataGridView2.Rows.Clear();
             var excursii = lista2;
             lista2 = excursii;
             for (var i = 0; i < excursii.Count; i++)
             {
-                string numeFirmaTransport = srv.getFirmaTransportById(excursii[i].idFirmaTransport).nume;
+                string numeFirmaTransport = (await client.getFirmaTransportById(excursii[i].idFirmaTransport)).nume;
                 string oraPlecarii = excursii[i].ora;
                 string pret = excursii[i].pret.ToString();
-                string numarLocuriDisponibile = srv.getNrLocuriDisponibile(excursii[i]).ToString();
+                string numarLocuriDisponibile = (await client.getNrLocuriDisponibile(excursii[i].id)).ToString();
                 string[] row = { numeFirmaTransport, oraPlecarii, pret, numarLocuriDisponibile };
                 dataGridView2.Rows.Add(row);
                 if (numarLocuriDisponibile == "0")

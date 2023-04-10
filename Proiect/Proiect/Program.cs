@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Proiect.Client;
+using System;
 using System.Windows.Forms;
 
 namespace Proiect
@@ -17,20 +15,13 @@ namespace Proiect
         {
             log4net.Config.XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo(AppDomain.CurrentDomain.BaseDirectory + "App.config"));
 
-            Repository<int, Excursie> excursii = new ExcursieDBRepo();
-            Repository<int, FirmaTransport> firmeTransport = new FirmaTransportDBRepo();
-            Repository<int, ObiectiveTuristice> obiectiveTuristice = new ObiectiveTuristiceDBRepo();
-            Repository<int, Persoana> persoane = new PersoanaDBRepo();
-            Repository<int, Rezervare> rezervari = new RezervareDBRepo();
-            Repository<int, User> useri = new UserDBRepo();
-            Service srv = new Service(excursii, firmeTransport, obiectiveTuristice, persoane, rezervari, useri);
-
+            ITripClient client = new TripClient("http://localhost:12500");
             
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var Main = new Main(srv);
-            Main.Show();
+            var Login = new Login(client);
+            Login.Show();
             Application.Run();
 
             Application.Exit();

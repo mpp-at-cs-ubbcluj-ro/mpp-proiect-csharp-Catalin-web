@@ -359,3 +359,60 @@
 2023-04-02 19:58:47,726 [1] INFO Monitor - get all rezervare
 2023-04-02 19:58:47,729 [1] INFO Monitor - get all firma transport
 2023-04-02 19:58:47,731 [1] INFO Monitor - get all rezervare
+2023-04-09 21:57:40,614 [1] INFO Monitor - Get all excursie
+2023-04-09 21:57:41,162 [1] INFO Monitor - get all obiectiv turistic
+2023-04-09 21:57:41,168 [1] INFO Monitor - get all firma transport
+2023-04-09 21:57:41,169 [1] INFO Monitor - get all rezervare
+2023-04-09 21:58:10,238 [1] INFO Monitor - adauga user
+2023-04-09 21:58:10,477 [1] INFO Monitor - Get all excursie
+2023-04-09 21:58:10,499 [1] INFO Monitor - get all obiectiv turistic
+2023-04-09 21:58:10,501 [1] INFO Monitor - get all firma transport
+2023-04-09 21:58:10,504 [1] INFO Monitor - get all rezervare
+2023-04-09 21:58:51,404 [1] INFO Monitor - adauga user
+2023-04-09 21:58:51,587 [1] INFO Monitor - Get all excursie
+2023-04-09 21:58:51,598 [1] INFO Monitor - get all obiectiv turistic
+2023-04-09 21:58:51,599 [1] INFO Monitor - get all firma transport
+2023-04-09 21:58:51,601 [1] INFO Monitor - get all rezervare
+2023-04-09 21:59:35,392 [1] INFO Monitor - adauga user
+2023-04-09 21:59:45,478 [1] INFO Monitor - Get all excursie
+2023-04-09 21:59:45,489 [1] INFO Monitor - get all obiectiv turistic
+2023-04-09 21:59:45,492 [1] INFO Monitor - get all firma transport
+2023-04-09 21:59:45,496 [1] INFO Monitor - get all rezervare
+2023-04-09 22:02:24,179 [1] INFO Monitor - adauga user
+2023-04-09 22:02:27,627 [1] INFO Monitor - Get all excursie
+2023-04-09 22:02:27,636 [1] INFO Monitor - get all obiectiv turistic
+2023-04-09 22:02:27,639 [1] INFO Monitor - get all firma transport
+2023-04-09 22:02:27,641 [1] INFO Monitor - get all rezervare
+2023-04-09 22:07:04,073 [1] INFO Monitor - adauga user
+2023-04-09 22:07:06,796 [1] INFO Monitor - Get all excursie
+2023-04-09 22:07:06,813 [1] INFO Monitor - get all obiectiv turistic
+2023-04-09 22:07:06,818 [1] INFO Monitor - get all firma transport
+2023-04-09 22:07:06,821 [1] INFO Monitor - get all rezervare
+2023-04-09 22:07:46,783 [1] INFO Monitor - adauga user
+2023-04-09 22:08:16,096 [1] INFO Monitor - adauga user
+2023-04-09 22:08:16,483 [1] INFO Monitor - Get all excursie
+2023-04-09 22:08:16,490 [1] INFO Monitor - get all obiectiv turistic
+2023-04-09 22:08:16,492 [1] INFO Monitor - get all firma transport
+2023-04-09 22:08:16,493 [1] INFO Monitor - get all rezervare
+2023-04-09 22:14:14,278 [1] INFO Monitor - adauga user
+2023-04-09 22:14:14,833 [1] INFO Monitor - Get all excursie
+2023-04-09 22:14:33,610 [1] INFO Monitor - adauga user
+2023-04-09 22:14:34,390 [1] INFO Monitor - Get all excursie
+2023-04-09 22:15:11,417 [1] INFO Monitor - adauga user
+2023-04-09 22:15:11,987 [1] INFO Monitor - Get all excursie
+2023-04-09 22:15:57,861 [1] INFO Monitor - Get all excursie
+2023-04-09 22:16:40,528 [1] INFO Monitor - Get all excursie
+2023-04-09 22:21:05,432 [1] INFO Monitor - Get all excursie
+2023-04-09 22:22:49,777 [1] INFO Monitor - Get all excursie
+2023-04-09 22:24:16,396 [1] INFO Monitor - Get all excursie
+2023-04-10 14:19:41,563 [1] INFO Monitor - Get all excursie
+2023-04-10 14:23:44,462 [1] INFO Monitor - Get all excursie
+2023-04-10 14:26:59,001 [1] INFO Monitor - Get all excursie
+2023-04-10 14:27:15,715 [1] INFO Monitor - Get all excursie
+2023-04-10 14:28:54,313 [1] INFO Monitor - Get all excursie
+2023-04-10 14:30:56,432 [1] INFO Monitor - Get all excursie
+2023-04-10 14:31:26,594 [1] INFO Monitor - Get all excursie
+2023-04-10 14:32:05,405 [1] INFO Monitor - Get all excursie
+2023-04-10 14:32:07,321 [1] INFO Monitor - get all obiectiv turistic
+2023-04-10 14:32:07,324 [1] INFO Monitor - get all firma transport
+2023-04-10 14:32:07,332 [1] INFO Monitor - get all rezervare

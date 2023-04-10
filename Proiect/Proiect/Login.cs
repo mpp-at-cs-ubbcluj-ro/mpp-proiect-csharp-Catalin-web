@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proiect.Client;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,12 +15,12 @@ namespace Proiect
     {
         private string email;
         private string parola;
-        private Service srv;
+        private ITripClient client;
 
-        public Login(Service srv)
+        public Login(ITripClient client)
         {
             InitializeComponent();
-            this.srv = srv;
+            this.client = client;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -40,19 +41,19 @@ namespace Proiect
 
         private void button1_Click(object sender, EventArgs e)
         {
-            srv.login(email, parola);
+            client.login(email, parola);
             showMainForm();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            srv.authentificare(email, parola);
+            client.authentificare(email, parola);
             showMainForm();
         }
 
         private void showMainForm()
         {
-            Main main = new Main(srv);
+            Main main = new Main(client);
             main.Show();
             Close();
         }

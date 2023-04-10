@@ -1,5 +1,6 @@
 ﻿using DataStore.Core;
 using Model.Entities;
+using System.Text;
 
 namespace WebApi.Services
 {

@@ -34,7 +34,7 @@ namespace WebApi.Controllers
         /// Login.
         /// </summary>
         /// <response code="200">OK.</response>
-        [HttpGet]
+        [HttpPost]
         [Route("login")]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -47,7 +47,7 @@ namespace WebApi.Controllers
         /// Logout.
         /// </summary>
         /// <response code="200">OK.</response>
-        [HttpGet]
+        [HttpPost]
         [Route("logout")]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -60,7 +60,7 @@ namespace WebApi.Controllers
         /// Query all trips.
         /// </summary>
         /// <response code="200">OK.</response>
-        [HttpGet]
+        [HttpPost]
         [Route("query/trips")]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -73,7 +73,7 @@ namespace WebApi.Controllers
         /// Query by nume obiectiv and ora.
         /// </summary>
         /// <response code="200">OK.</response>
-        [HttpGet]
+        [HttpPost]
         [Route("query/trips/obiectiv")]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -86,7 +86,7 @@ namespace WebApi.Controllers
         /// Query firma transport by id.
         /// </summary>
         /// <response code="200">OK.</response>
-        [HttpGet]
+        [HttpPost]
         [Route("query/firma/id")]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -99,7 +99,7 @@ namespace WebApi.Controllers
         /// Query firma transport by nume.
         /// </summary>
         /// <response code="200">OK.</response>
-        [HttpGet]
+        [HttpPost]
         [Route("query/firma/nume")]
         public FirmaTransport queryFirmaByNume(string numeFirma)
         {
@@ -110,18 +110,18 @@ namespace WebApi.Controllers
         /// Get number of left spaces.
         /// </summary>
         /// <response code="200">OK.</response>
-        [HttpGet]
+        [HttpPost]
         [Route("query/trip/left")]
-        public int queryLeftSpaces(int idExcursie)
+        public Left queryLeftSpaces(int idExcursie)
         {
-            return _tripFacade.getNrLocuriDisponibile(idExcursie);
+            return new Left() { left = _tripFacade.getNrLocuriDisponibile(idExcursie) };
         }
 
         /// <summary>
         /// Query obiectiv by id.
         /// </summary>
         /// <response code="200">OK.</response>
-        [HttpGet]
+        [HttpPost]
         [Route("query/obiectiv/id")]
         public ObiectiveTuristice queryObiectivById(int idObiectiv)
         {
@@ -132,7 +132,7 @@ namespace WebApi.Controllers
         /// Query obiectiv by nume.
         /// </summary>
         /// <response code="200">OK.</response>
-        [HttpGet]
+        [HttpPost]
         [Route("query/obiectiv/nume")]
         public ObiectiveTuristice queryObiectivByNume(string numeObiectiv)
         {
@@ -143,7 +143,7 @@ namespace WebApi.Controllers
         /// Get person by name and telefon number.
         /// </summary>
         /// <response code="200">OK.</response>
-        [HttpGet]
+        [HttpPost]
         [Route("query/persoana/nume")]
         public Persoana getPersoanaByNumeAndTelefon(string numeClient, string numarTelefon)
         {
