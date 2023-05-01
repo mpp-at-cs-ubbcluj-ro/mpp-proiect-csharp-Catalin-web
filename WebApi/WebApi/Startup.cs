@@ -1,9 +1,7 @@
 ﻿using DataStore.Core;
 using DataStore.Core.Implementations;
 using DataStore.Provicers.SQLite;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.OpenApi.Models;
-using WebApi.Controllers;
 using WebApi.Services;
 using WebApi.Settings;
 

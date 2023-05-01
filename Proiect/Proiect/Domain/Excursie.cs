@@ -17,7 +17,7 @@ namespace Proiect
         public int idFirmaTransport { get; set; }
 
         [Required]
-        public string ora { get; set; }
+        public int ora { get; set; }
 
         [Required]
         public float pret { get; set; }

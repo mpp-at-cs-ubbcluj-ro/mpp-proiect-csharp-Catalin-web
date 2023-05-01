@@ -14,6 +14,9 @@ namespace Proiect
         [STAThread]
         static void Main()
         {
+            try
+            {
+
             log4net.Config.XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo(AppDomain.CurrentDomain.BaseDirectory + "App.config"));
 
             ITripClient client = new TripClient("http://localhost:12500");
@@ -23,8 +26,11 @@ namespace Proiect
             var Login = new Login(client);
             Login.Show();
             Application.Run();
-
             Application.Exit();
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }

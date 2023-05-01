@@ -45,15 +45,14 @@ namespace Proiect
         {
             dataGridView1.Rows.Clear();
             var excursii = await client.getAllExcursii();
-            var excurs = await client.getAllExcursii();
             for(var i = 0;i<excursii.Count;i++) 
             {
                 string numeObiectiv = (await client.getObiectivById(excursii[i].idObiectiv)).nume;
                 string numeFirmaTransport = (await client.getFirmaTransportById(excursii[i].idFirmaTransport)).nume;
-                string oraPlecarii = excursii[i].ora;
+                int oraPlecarii = excursii[i].ora;
                 string pret = excursii[i].pret.ToString();
                 string numarLocuriDisponibile = (await client.getNrLocuriDisponibile(excursii[i].id)).ToString();
-                string[] row = { numeObiectiv, numeFirmaTransport, oraPlecarii, pret, numarLocuriDisponibile };
+                string[] row = { numeObiectiv, numeFirmaTransport, oraPlecarii.ToString(), pret, numarLocuriDisponibile };
                 dataGridView1.Rows.Add(row);
                 if(numarLocuriDisponibile == "0")
                 {
@@ -71,10 +70,10 @@ namespace Proiect
             for (var i = 0; i < excursii.Count; i++)
             {
                 string numeFirmaTransport = (await client.getFirmaTransportById(excursii[i].idFirmaTransport)).nume;
-                string oraPlecarii = excursii[i].ora;
+                int oraPlecarii = excursii[i].ora;
                 string pret = excursii[i].pret.ToString();
                 string numarLocuriDisponibile = (await client.getNrLocuriDisponibile(excursii[i].id)).ToString();
-                string[] row = { numeFirmaTransport, oraPlecarii, pret, numarLocuriDisponibile };
+                string[] row = { numeFirmaTransport, oraPlecarii.ToString(), pret, numarLocuriDisponibile };
                 dataGridView2.Rows.Add(row);
                 if (numarLocuriDisponibile == "0")
                 {
@@ -119,10 +118,10 @@ namespace Proiect
             for (var i = 0; i < excursii.Count; i++)
             {
                 string numeFirmaTransport = (await client.getFirmaTransportById(excursii[i].idFirmaTransport)).nume;
-                string oraPlecarii = excursii[i].ora;
+                int oraPlecarii = excursii[i].ora;
                 string pret = excursii[i].pret.ToString();
                 string numarLocuriDisponibile = (await client.getNrLocuriDisponibile(excursii[i].id)).ToString();
-                string[] row = { numeFirmaTransport, oraPlecarii, pret, numarLocuriDisponibile };
+                string[] row = { numeFirmaTransport, oraPlecarii.ToString(), pret, numarLocuriDisponibile };
                 dataGridView2.Rows.Add(row);
                 if (numarLocuriDisponibile == "0")
                 {
