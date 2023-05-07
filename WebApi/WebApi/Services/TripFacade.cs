@@ -68,7 +68,7 @@ namespace WebApi.Services
             {
                 if (excursie.id_obiectiv.Equals(obiectiv.id))
                 {
-                    var ora = int.Parse(excursie.ora);
+                    var ora = excursie.ora;
                     if (ora >= oraMinim && ora <= oraMaxim)
                     {
                         lst.Add(excursie);
@@ -111,6 +111,7 @@ namespace WebApi.Services
             if (locuriDisponibile >= numarBileteDorite)
             {
                 _tripContext.Rezervari.Add(rezervare);
+                _tripContext.SaveChanges();
             }
         }
     }
