@@ -13,6 +13,6 @@ namespace Model.Entities
         public string nume { get; set; }
 
         [Required]
-        public string numarTelefon { get; set; }
+        public string numar_telefon { get; set; }
     }
 }

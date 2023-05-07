@@ -10,10 +10,10 @@ namespace Model.Entities
     public class Excursie : Entity<int>
     {
         [Required]
-        public int idObiectiv { get; set; }
+        public int id_obiectiv { get; set; }
 
         [Required]
-        public int idFirmaTransport { get; set; }
+        public int id_firma_transport { get; set; }
 
         [Required]
         public string ora { get; set; }
@@ -22,6 +22,6 @@ namespace Model.Entities
         public float pret { get; set; }
 
         [Required]
-        public int nrLocuriTotale { get; set; }
+        public int nr_locuri_totale { get; set; }
     }
 }

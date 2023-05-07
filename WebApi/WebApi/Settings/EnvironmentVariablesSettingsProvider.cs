@@ -24,7 +24,7 @@ namespace WebApi.Settings
         {
             get
             {
-                return Environment.GetEnvironmentVariable("TRIP_CONNECTION_STRING") ?? "Data Source=E:\\Facultate\\Sem_4\\MPP\\Laboratoare\\Lab3\\mpp-proiect-csharp-Catalin-web\\Proiect\\Proiect\\Files\\exursii.db;version=3;new=False;datetimeformat=CurrentCulture;";
+                return Environment.GetEnvironmentVariable("TRIP_CONNECTION_STRING") ?? "Data Source=E:\\Facultate\\Sem_4\\MPP\\Laboratoare\\Lab3\\mpp-proiect-csharp-Catalin-web\\Proiect\\Proiect\\Files\\exursii.db;";
             }
         }
     }

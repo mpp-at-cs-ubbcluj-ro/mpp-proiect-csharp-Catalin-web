@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataStore.Provicers.SQLite;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Model.Entities;
 using System.Collections.Concurrent;
@@ -19,9 +20,9 @@ namespace WebApi.Controllers
         private static ConcurrentBag<WebSocket> webSockets = new();
         private static WebSocketReceiveResult result;
 
-        public TripController(ITripFacade tripFacade)
+        public TripController(TripContext tripContext)
         {
-            _tripFacade = tripFacade;
+            _tripFacade = new TripFacade(tripContext);
         }
 
         /// <summary>
