@@ -197,6 +197,90 @@ namespace WebApi.Controllers
             await Task.Delay(-1);
         }
 
+        /// <summary>
+        /// Add Excursie
+        /// </summary>
+        /// <response code="200">OK.</response>
+        [HttpPost]
+        [Route("exursie/add")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<Excursie> addExcursie(string numeObiectiv, string numeFirma, int ora, float pret, int nrLocuriTotale)
+        {
+            try
+            {
+            var excursie = _tripFacade.addExcursie(numeObiectiv, numeFirma, ora, pret, nrLocuriTotale);
+            return Ok(excursie);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        /// <summary>
+        /// Delete Excursie
+        /// </summary>
+        /// <response code="200">OK.</response>
+        [HttpPost]
+        [Route("exursie/delete")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<Excursie> deleteExcursie(int idExcursie)
+        {
+            try
+            {
+                _tripFacade.deleteExcursie(idExcursie);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        /// <summary>
+        /// Get Excursie
+        /// </summary>
+        /// <response code="200">OK.</response>
+        [HttpPost]
+        [Route("exursie/get")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<Excursie> GetExcursie(int idExcursie)
+        {
+            try
+            {
+               var excursie = _tripFacade.getExcursie(idExcursie);
+                return Ok(excursie);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        /// <summary>
+        /// Update Excursie
+        /// </summary>
+        /// <response code="200">OK.</response>
+        [HttpPost]
+        [Route("exursie/update")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<Excursie> UpdateExcursie(int idExcursie, string numeObiectiv, string numeFirma, int ora, float pret, int nrLocuriTotale)
+        {
+            try
+            {
+                _tripFacade.updateExcursie(idExcursie,numeObiectiv,numeFirma,ora,pret,nrLocuriTotale);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         private async void sendDataToAll()
         {
             foreach (var webSocket in webSockets)

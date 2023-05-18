@@ -114,5 +114,60 @@ namespace WebApi.Services
                 _tripContext.SaveChanges();
             }
         }
+
+        public Excursie addExcursie(string numeObiectiv, string numeFirma, int ora, float pret, int nrLocuriTotale)
+        {
+            int id_obiectiv = getObiectivByNume(numeObiectiv)?.id ?? 1;
+            int id_firma_transport = getFirmaTransportByNume(numeFirma)?.id ?? 1;
+            Excursie excurise= new Excursie()
+            {
+                id_obiectiv = id_obiectiv,
+                id_firma_transport = id_firma_transport,
+                ora = ora,
+                pret = pret,
+                nr_locuri_totale = nrLocuriTotale
+            };
+            _tripContext.Excursii.Add(excurise);
+            _tripContext.SaveChanges();
+            return _tripContext.Excursii.Where(e => e.id_obiectiv == id_obiectiv).FirstOrDefault();
+        }
+
+        public void deleteExcursie(int idExcursie)
+        {
+            var excursie = _tripContext.Excursii.Where(e => e.id == idExcursie).FirstOrDefault();
+            _tripContext.Excursii.Remove(excursie);
+            _tripContext.SaveChanges();
+        }
+
+        public void updateExcursie(int idExcursie, string numeObiectiv, string numeFirma, int ora, float pret, int nrLocuriTotale)
+        {
+            int id_obiectiv = getObiectivByNume(numeObiectiv)?.id ?? 1;
+            int id_firma_transport = getFirmaTransportByNume(numeFirma)?.id ?? 1;
+            Excursie newExcursie = new Excursie()
+            {
+                id_obiectiv = id_obiectiv,
+                id_firma_transport = id_firma_transport,
+                ora = ora,
+                pret = pret,
+                nr_locuri_totale = nrLocuriTotale
+            };
+
+            var excursie = _tripContext.Excursii.SingleOrDefault(e => e.id == idExcursie);
+            if (excursie == null)
+            {
+                return;
+            }
+            excursie.id_obiectiv = newExcursie.id_obiectiv;
+            excursie.id_firma_transport = newExcursie.id_firma_transport;
+            excursie.ora = newExcursie.ora;
+            excursie.pret = newExcursie.pret;
+            excursie.nr_locuri_totale = newExcursie.nr_locuri_totale;
+            _tripContext.SaveChanges();
+        }
+
+        public Excursie getExcursie(int idExcursie)
+        {
+            return _tripContext.Excursii.Single(e => e.id == idExcursie);
+        }
     }
 }
