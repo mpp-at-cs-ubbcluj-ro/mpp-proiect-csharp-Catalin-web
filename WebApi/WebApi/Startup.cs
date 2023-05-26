@@ -1,6 +1,5 @@
-﻿using DataStore.Core;
-using DataStore.Core.Implementations;
-using DataStore.Provicers.SQLite;
+﻿using DataStore.Provicers.SQLite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using WebApi.Services;
 using WebApi.Settings;
@@ -20,20 +19,11 @@ namespace WebApi
             var settingsProvider = SettingsProviderFactory.Create();
             services.AddSingleton<ISettingsProvider>((_) => settingsProvider);
 
-            // Add repo dependencies:
-            var connection = new Connection(settingsProvider.ConnectionString);
-            services.AddSingleton<IConnection>(connection);
-
-            // Add repositoryes:
-            services.AddSingleton<IExcursieRepository, ExcursieRepository>();
-            services.AddSingleton<IFirmaTransportRepository, FirmaTransportRepository>();
-            services.AddSingleton<IObiectiveTuristiceRepository, ObiectiveTuristiceRepository>();
-            services.AddSingleton<IPersoanaRepository, PersoanaRepository>();
-            services.AddSingleton<IRezervareRepository, RezervareRepository>();
-            services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddDbContext<TripContext>(options =>
+            {
+                options.UseSqlite(settingsProvider.ConnectionString);
+            });
             
-            services.AddSingleton<ITripFacade, TripFacade>();
-
             // Controller:
             services.AddControllers(options =>
             {
@@ -67,6 +57,11 @@ namespace WebApi
 
             var serviceSettings = app.ApplicationServices.GetService<ISettingsProvider>();
 
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
             // Web sockets middleware
             app.UseWebSockets();
             app.UseRouting();

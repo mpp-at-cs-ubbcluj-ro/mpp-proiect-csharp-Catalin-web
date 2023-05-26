@@ -221,7 +221,7 @@ namespace Proiect.Client
             return JsonSerializer.Deserialize<T>(json);
         }
 
-        /*public async Task handleWebSocket(Action callback)
+        public async Task handleWebSocket(Action callback)
         {
             var socket = new ClientWebSocket();
             await socket.ConnectAsync(new Uri("ws://localhost:12500/v1/webSocket"), CancellationToken.None);
@@ -235,9 +235,9 @@ namespace Proiect.Client
                 var serverMsg = Encoding.UTF8.GetString(buffer, 0, result.Count);
                 callback();
             }
-        }*/
+        }
 
-        public async Task handleWebSocket(Action callback)
+        /*public async Task handleWebSocket(Action callback)
         {
             try { 
             while (true)
@@ -250,6 +250,6 @@ namespace Proiect.Client
             {
 
             }
-        }
+        }*/
     }
 }

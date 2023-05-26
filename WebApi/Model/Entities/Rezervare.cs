@@ -10,12 +10,12 @@ namespace Model.Entities
     public class Rezervare : Entity<int>
     {
         [Required]
-        public int idExcursie { get; set; }
+        public int id_excursie { get; set; }
 
         [Required]
-        public int idPersoana { get; set; }
+        public int id_persoana { get; set; }
 
         [Required]
-        public int nrBilete { get; set; }
+        public int nr_bilete { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using DataStore.Core;
+﻿using DataStore.Provicers.SQLite;
 using Model.Entities;
 using System.Text;
 
@@ -6,35 +6,22 @@ namespace WebApi.Services
 {
     public class TripFacade : ITripFacade
     {
-        private readonly IExcursieRepository _excursii;
-        private readonly IFirmaTransportRepository _firmeTransport;
-        private readonly IObiectiveTuristiceRepository _obiectiveTuristice;
-        private readonly IPersoanaRepository _persoane;
-        private readonly IRezervareRepository _rezervari;
-        private readonly IUserRepository _useri;
         private int userId = -1;
+        private TripContext _tripContext;
 
-        public TripFacade(IExcursieRepository excursii, IFirmaTransportRepository firmeTransport, IObiectiveTuristiceRepository obiectiveTuristice, IPersoanaRepository persoane, IRezervareRepository rezervari, IUserRepository useri)
+        public TripFacade(TripContext tripContext)
         {
-            _excursii = excursii;
-            _firmeTransport = firmeTransport;
-            _obiectiveTuristice = obiectiveTuristice;
-            _persoane = persoane;
-            _rezervari = rezervari;
-            _useri = useri;
+            _tripContext = tripContext;
         }
 
         public void login(string email, string parola)
         {
-            var useri = _useri.getAll();
-            foreach (var user in useri)
+            var user = _tripContext.Useri.Where(u => u.email == email && u.parola == parola).FirstOrDefault();
+            if (user != null)
             {
-                if (user.email == email && user.parola == parola)
-                {
-                    userId = user.id;
-                    return;
-                }
+                userId = user.id;
             }
+
         }
 
         public void logout()
@@ -44,81 +31,44 @@ namespace WebApi.Services
 
         public void authentificare(string email, string parola)
         {
-            User user = new User()
-            {
-                email = email,
-                parola = parola
-            };
-            _useri.adauga(user);
+            _tripContext.Useri.Add(new User() { email = email, parola = parola });
         }
 
         public ObiectiveTuristice getObiectivByNume(string numeObiectiv)
         {
-            var obiective = _obiectiveTuristice.getAll();
-            foreach (var obiectiv in obiective)
-            {
-                if (obiectiv.nume.Equals(numeObiectiv))
-                {
-                    return obiectiv;
-                }
-            }
-            return null;
+            return _tripContext.ObiectiveTuristice.Where(o => o.nume == numeObiectiv).FirstOrDefault();
         }
 
         public ObiectiveTuristice getObiectivById(int idObiectiv)
         {
-            var obiective = _obiectiveTuristice.getAll();
-            foreach (var obiectiv in obiective)
-            {
-                if (obiectiv.id == idObiectiv)
-                {
-                    return obiectiv;
-                }
-            }
-            return null;
+            return _tripContext.ObiectiveTuristice.Where(o => o.id == idObiectiv).FirstOrDefault();
         }
 
         public FirmaTransport getFirmaTransportByNume(string numeFirma)
         {
-            var firme = _firmeTransport.getAll();
-            foreach (var firma in firme)
-            {
-                if (firma.nume.Equals(numeFirma))
-                {
-                    return firma;
-                }
-            }
-            return null;
+            return _tripContext.FirmeTransport.Where(f => f.nume == numeFirma).FirstOrDefault();
         }
 
         public FirmaTransport getFirmaTransportById(int idFirma)
         {
-            var firme = _firmeTransport.getAll();
-            foreach (var firma in firme)
-            {
-                if (firma.id == idFirma)
-                {
-                    return firma;
-                }
-            }
-            return null;
+            return _tripContext.FirmeTransport.Where(f => f.id == idFirma).FirstOrDefault();
         }
 
         public List<Excursie> getAllExcursii()
         {
-            return _excursii.getAll();
+            return _tripContext.Excursii.ToList();
         }
 
         public List<Excursie> getAllExcursiiByNumeAndInterval(string numeObiectiv, int oraMinim, int oraMaxim)
         {
             var obiectiv = getObiectivByNume(numeObiectiv);
             List<Excursie> lst = new List<Excursie>();
-            var excursii = _excursii.getAll();
+            var excursii = _tripContext.Excursii.ToList();
             foreach (var excursie in excursii)
             {
-                if (excursie.idObiectiv.Equals(obiectiv.id))
+                if (excursie.id_obiectiv.Equals(obiectiv.id))
                 {
-                    var ora = int.Parse(excursie.ora);
+                    var ora = excursie.ora;
                     if (ora >= oraMinim && ora <= oraMaxim)
                     {
                         lst.Add(excursie);
@@ -130,14 +80,14 @@ namespace WebApi.Services
 
         public int getNrLocuriDisponibile(int idExcursie)
         {
-            var excursie = _excursii.cautaId(idExcursie);
-            var totalLocuri = excursie.nrLocuriTotale;
-            var rezervari = _rezervari.getAll();
+            var excursie = _tripContext.Excursii.Where(e => e.id == idExcursie).FirstOrDefault();
+            var totalLocuri = excursie.nr_locuri_totale;
+            var rezervari = _tripContext.Rezervari.ToList();
             foreach (var rezervare in rezervari)
             {
-                if (rezervare.idExcursie == idExcursie)
+                if (rezervare.id_excursie == idExcursie)
                 {
-                    totalLocuri -= rezervare.nrBilete;
+                    totalLocuri -= rezervare.nr_bilete;
                 }
             }
             return totalLocuri;
@@ -145,15 +95,7 @@ namespace WebApi.Services
 
         public Persoana getPersoanaByNumeAndTelefon(string numeClient, string numarTelefon)
         {
-            var persoane = _persoane.getAll();
-            foreach (var persoana in persoane)
-            {
-                if (persoana.nume.Equals(numeClient) && persoana.numarTelefon.Equals(numarTelefon))
-                {
-                    return persoana;
-                }
-            }
-            return null;
+            return _tripContext.Persoane.Where(p => p.nume == numeClient && p.numar_telefon == numarTelefon).FirstOrDefault();
         }
 
         public void rezervaLocuri(string numeClient, string numarTelefon, int numarBileteDorite, int idExcursie)
@@ -161,15 +103,71 @@ namespace WebApi.Services
             var persoana = getPersoanaByNumeAndTelefon(numeClient, numarTelefon);
             Rezervare rezervare = new Rezervare()
             {
-                idExcursie = idExcursie,
-                idPersoana = persoana.id,
-                nrBilete = numarBileteDorite
+                id_excursie = idExcursie,
+                id_persoana = persoana.id,
+                nr_bilete = numarBileteDorite
             };
             var locuriDisponibile = getNrLocuriDisponibile(idExcursie);
             if (locuriDisponibile >= numarBileteDorite)
             {
-                _rezervari.adauga(rezervare);
+                _tripContext.Rezervari.Add(rezervare);
+                _tripContext.SaveChanges();
             }
+        }
+
+        public Excursie addExcursie(string numeObiectiv, string numeFirma, int ora, float pret, int nrLocuriTotale)
+        {
+            int id_obiectiv = getObiectivByNume(numeObiectiv)?.id ?? 1;
+            int id_firma_transport = getFirmaTransportByNume(numeFirma)?.id ?? 1;
+            Excursie excurise= new Excursie()
+            {
+                id_obiectiv = id_obiectiv,
+                id_firma_transport = id_firma_transport,
+                ora = ora,
+                pret = pret,
+                nr_locuri_totale = nrLocuriTotale
+            };
+            _tripContext.Excursii.Add(excurise);
+            _tripContext.SaveChanges();
+            return _tripContext.Excursii.Where(e => e.id_obiectiv == id_obiectiv).FirstOrDefault();
+        }
+
+        public void deleteExcursie(int idExcursie)
+        {
+            var excursie = _tripContext.Excursii.Where(e => e.id == idExcursie).FirstOrDefault();
+            _tripContext.Excursii.Remove(excursie);
+            _tripContext.SaveChanges();
+        }
+
+        public void updateExcursie(int idExcursie, string numeObiectiv, string numeFirma, int ora, float pret, int nrLocuriTotale)
+        {
+            int id_obiectiv = getObiectivByNume(numeObiectiv)?.id ?? 1;
+            int id_firma_transport = getFirmaTransportByNume(numeFirma)?.id ?? 1;
+            Excursie newExcursie = new Excursie()
+            {
+                id_obiectiv = id_obiectiv,
+                id_firma_transport = id_firma_transport,
+                ora = ora,
+                pret = pret,
+                nr_locuri_totale = nrLocuriTotale
+            };
+
+            var excursie = _tripContext.Excursii.SingleOrDefault(e => e.id == idExcursie);
+            if (excursie == null)
+            {
+                return;
+            }
+            excursie.id_obiectiv = newExcursie.id_obiectiv;
+            excursie.id_firma_transport = newExcursie.id_firma_transport;
+            excursie.ora = newExcursie.ora;
+            excursie.pret = newExcursie.pret;
+            excursie.nr_locuri_totale = newExcursie.nr_locuri_totale;
+            _tripContext.SaveChanges();
+        }
+
+        public Excursie getExcursie(int idExcursie)
+        {
+            return _tripContext.Excursii.Single(e => e.id == idExcursie);
         }
     }
 }

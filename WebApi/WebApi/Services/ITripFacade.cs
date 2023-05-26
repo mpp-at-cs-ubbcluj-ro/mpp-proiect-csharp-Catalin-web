@@ -1,4 +1,5 @@
-﻿using Model.Entities;
+﻿using DataStore.Provicers.SQLite;
+using Model.Entities;
 
 namespace WebApi.Services
 {
@@ -16,5 +17,9 @@ namespace WebApi.Services
         void login(string email, string parola);
         void logout();
         void rezervaLocuri(string numeClient, string numarTelefon, int numarBileteDorite, int idExcursie);
+        Excursie addExcursie(string numeObiectiv, string numeFirma, int ora, float pret, int nrLocuriTotale);
+        void deleteExcursie(int idExcursie);
+        void updateExcursie(int idExcursie, string numeObiectiv, string numeFirma, int ora, float pret, int nrLocuriTotale);
+        Excursie getExcursie(int idExcursie);
     }
 }

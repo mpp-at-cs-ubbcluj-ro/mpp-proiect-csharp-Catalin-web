@@ -47,8 +47,8 @@ namespace Proiect
             var excursii = await client.getAllExcursii();
             for(var i = 0;i<excursii.Count;i++) 
             {
-                string numeObiectiv = (await client.getObiectivById(excursii[i].idObiectiv)).nume;
-                string numeFirmaTransport = (await client.getFirmaTransportById(excursii[i].idFirmaTransport)).nume;
+                string numeObiectiv = (await client.getObiectivById(excursii[i].id_obiectiv)).nume;
+                string numeFirmaTransport = (await client.getFirmaTransportById(excursii[i].id_firma_transport)).nume;
                 int oraPlecarii = excursii[i].ora;
                 string pret = excursii[i].pret.ToString();
                 string numarLocuriDisponibile = (await client.getNrLocuriDisponibile(excursii[i].id)).ToString();
@@ -69,7 +69,7 @@ namespace Proiect
             lista2 = excursii;
             for (var i = 0; i < excursii.Count; i++)
             {
-                string numeFirmaTransport = (await client.getFirmaTransportById(excursii[i].idFirmaTransport)).nume;
+                string numeFirmaTransport = (await client.getFirmaTransportById(excursii[i].id_firma_transport)).nume;
                 int oraPlecarii = excursii[i].ora;
                 string pret = excursii[i].pret.ToString();
                 string numarLocuriDisponibile = (await client.getNrLocuriDisponibile(excursii[i].id)).ToString();
@@ -117,7 +117,7 @@ namespace Proiect
             lista2 = excursii;
             for (var i = 0; i < excursii.Count; i++)
             {
-                string numeFirmaTransport = (await client.getFirmaTransportById(excursii[i].idFirmaTransport)).nume;
+                string numeFirmaTransport = (await client.getFirmaTransportById(excursii[i].id_firma_transport)).nume;
                 int oraPlecarii = excursii[i].ora;
                 string pret = excursii[i].pret.ToString();
                 string numarLocuriDisponibile = (await client.getNrLocuriDisponibile(excursii[i].id)).ToString();
