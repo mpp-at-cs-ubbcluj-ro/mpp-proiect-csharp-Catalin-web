@@ -19,6 +19,7 @@ namespace Proiect
             InitializeComponent();
             initializeTable1();
             initializeTable2();
+            loadTable1Async();
             client.handleWebSocket(handleSocket);
         }
 

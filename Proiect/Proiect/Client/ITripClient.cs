@@ -20,6 +20,6 @@ namespace Proiect.Client
         void logout();
         void rezervaLocuri(string numeClient, string numarTelefon, int numarBileteDorite, int idExcursie);
         Task<HttpResponseMessage> SendAsync(HttpRequestMessage request);
-        Task handleWebSocket(Action callback);
+        void handleWebSocket(Action callback);
     }
 }

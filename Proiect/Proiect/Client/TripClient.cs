@@ -1,4 +1,5 @@
 ﻿using Nest;
+using Proiect.Communication;
 using Proiect.Domain;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Proiect.Client
     public class TripClient : ITripClient
     {
         private string _baseUrl;
+        private readonly IRabitMqHandler messageHandler = new RabitMqHandler("localhost");
         public TripClient(string baseUrl)
         {
             _baseUrl = baseUrl;
@@ -182,6 +184,7 @@ namespace Proiect.Client
             Dictionary<string, string> dict = new Dictionary<string, string>();
             var jsonBody = Serialize(dict);
             var response = await CallAsync(HttpMethod.Post, "/v1/add/rezervare?numeClient=" + numeClient + "&numarTelefon=" + numarTelefon + "&numarBileteDorite=" + numarBileteDorite.ToString() + "&idExcursie="+ idExcursie.ToString(), jsonBody);
+            messageHandler.sendMessage("rezervare");
         }
 
         private static string Serialize(object obj)
@@ -221,35 +224,9 @@ namespace Proiect.Client
             return JsonSerializer.Deserialize<T>(json);
         }
 
-        public async Task handleWebSocket(Action callback)
+        public void handleWebSocket(Action callback)
         {
-            var socket = new ClientWebSocket();
-            await socket.ConnectAsync(new Uri("ws://localhost:12500/v1/webSocket"), CancellationToken.None);
-            var mesaj = new ArraySegment<byte>(Encoding.UTF8.GetBytes("Hello from client"));
-            socket.SendAsync(mesaj, WebSocketMessageType.Text, true, CancellationToken.None).Wait();
-
-            while (true)
-            {
-                var buffer = new byte[1024 * 4];
-                var result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None).ConfigureAwait(true);
-                var serverMsg = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                callback();
-            }
+            messageHandler.addCallback(callback);
         }
-
-        /*public async Task handleWebSocket(Action callback)
-        {
-            try { 
-            while (true)
-            {
-                callback();
-                await Task.Delay(5000);
-            }
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }*/
     }
 }
