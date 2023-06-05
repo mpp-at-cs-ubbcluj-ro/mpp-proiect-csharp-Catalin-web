@@ -19,7 +19,7 @@ namespace Proiect.Client
     public class TripClient : ITripClient
     {
         private string _baseUrl;
-        private readonly IRabitMqHandler messageHandler = new RabitMqHandler("localhost");
+        private readonly IRabitMqHandler messageHandler = new RabitMqHandler();
         public TripClient(string baseUrl)
         {
             _baseUrl = baseUrl;
