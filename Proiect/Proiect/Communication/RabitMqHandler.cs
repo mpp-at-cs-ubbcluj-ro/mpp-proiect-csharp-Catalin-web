@@ -12,7 +12,7 @@ namespace Proiect.Communication
         private readonly string queueName = Guid.NewGuid().ToString();
         private readonly IModel channel;
 
-        public RabitMqHandler(string url)
+        public RabitMqHandler()
         {
             var connectionFactory = new ConnectionFactory();
             var connection = connectionFactory.CreateConnection();
